@@ -7,27 +7,34 @@ public class SpawnFood : MonoBehaviour {
     public GameObject food;
 
     //Border
-    public Transform border_Top;
-    public Transform border_Bottom;
-    public Transform border_Left;
-    public Transform border_Right;
+    private Transform border_Top;
+    private Transform border_Bottom;
+    private Transform border_Left;
+    private Transform border_Right;
 
 	// Use this for initialization
 	void Start () {
 		//spawn food every 4 seconds, starting in 3
-        InvokeRepeating("Spawn", 3, 4);
+        border_Top = GameObject.Find("Top_Border").transform;
+        border_Bottom = GameObject.Find("Bottom_Border").transform;
+        border_Left = GameObject.Find("Left_Border").transform;
+        border_Right = GameObject.Find("Right_Border").transform;
+        InvokeRepeating("Spawn", 3, 3);
 	}
 
     void Spawn()
     {
+        
+
         // x position between left & right border
-        int x = (int)Random.Range(border_Left.position.x, border_Right.position.x);
+        float x = Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f);
 
         //y position between top & bottom border
-        int z = (int)Random.Range(border_Top.position.z, border_Bottom.position.z);
+        float z = Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f);
 
+        Vector3 spawnPos = new Vector3(x, 0.5f, z);
         //Instantiate the food at (x, y)
-        Instantiate(food, new Vector3(x, 0.5f, z), Quaternion.identity);
+        Instantiate(food, spawnPos, Quaternion.identity,this.transform);
     }
 
 }

@@ -80,15 +80,17 @@ public class SnakeMove : MonoBehaviour
                 transform.position = newPos;
 
                 break;
-            case "Food":
+            case "FoodPrefab(Clone)":
 
-                
+
                 newBodyPos = this.transform.position - bodyCount * transform.forward;
                 bodyCount++;
 
                 Instantiate(cube, newBodyPos, this.transform.rotation, this.transform);
+                Destroy(col.gameObject);
                 break;
         }
+        
     }
 
 
