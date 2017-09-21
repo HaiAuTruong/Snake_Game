@@ -27,10 +27,10 @@ public class SpawnFood : MonoBehaviour {
         
 
         // x position between left & right border
-        float x = Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f);
+        float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
 
         //y position between top & bottom border
-        float z = Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f);
+        float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
 
         Vector3 spawnPos = new Vector3(x, 0.5f, z);
         //Instantiate the food at (x, y)
