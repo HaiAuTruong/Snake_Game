@@ -12,11 +12,11 @@ public class SnakeMove_Ver2 : MonoBehaviour
     private bool paused;
     private Vector3 newBodyPos;
     private int bodyCount = 1;
-    private List<GameObject> bodyPart;
+    
     // Use this for initialization
     void Start()
     {
-        bodyPart = new List<GameObject>();
+        
     }
 
     // Update is called once per frame
@@ -90,9 +90,9 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                 newBodyPos = this.transform.position - bodyCount * transform.forward;
                 bodyCount++;
-                bodyPart.Add(Instantiate(cube, newBodyPos, this.transform.rotation, this.transform) as GameObject);
-                Debug.Log(col.gameObject.name);
                 Destroy(col.gameObject);
+                Instantiate(cube, newBodyPos, this.transform.rotation, this.transform);
+         
                 break;
         }
 

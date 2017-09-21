@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SnakeDirection : MonoBehaviour {
 
-    public float smooth = 1f;
+    public float smooth = 2f;
   
     private Quaternion targetRotation;
     private string Direction;
