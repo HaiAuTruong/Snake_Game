@@ -14,11 +14,11 @@ public class SnakeMove : MonoBehaviour
 
     Vector3 newBodyPos;
     int bodyCount = 1;
-    List<GameObject> bodyPart;
+
     // Use this for initialization
     void Start()
     {
-        bodyPart = new List<GameObject>();
+        
     }
 
     // Update is called once per frame
@@ -83,12 +83,16 @@ public class SnakeMove : MonoBehaviour
                 transform.position = newPos;
 
                 break;
-            case "FoodPrefab(Clone)":
+            case "smallFood(Clone)":
+            case "bigFood(Clone)":
 
                 newBodyPos = this.transform.position - bodyCount * transform.forward;
                 bodyCount++;
-                bodyPart.Add(Instantiate(cube, newBodyPos, this.transform.rotation, this.transform) as GameObject);
+                Instantiate(cube, newBodyPos, this.transform.rotation, this.transform);
                 Destroy(col.gameObject);
+
+                SpawnFood.ate = true;
+                Debug.Log(SpawnFood.ate);
                 break;
         }
 
