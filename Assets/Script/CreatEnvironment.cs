@@ -7,12 +7,12 @@ public class CreatEnvironment : MonoBehaviour
     public GameObject Rock;
     static int n = 10;
     public static List<Vector3> listRock = new List<Vector3>(n);
-    private int defaultDistance = 30;
+    private float defaultDistance = 10f;
     private Transform border_Top;
     private Transform border_Bottom;
     private Transform border_Left;
     private Transform border_Right;
-   
+    private int createdRock = 0;
 
     // Use this for initialization
     void Start() {
@@ -23,29 +23,38 @@ public class CreatEnvironment : MonoBehaviour
         CreatEnviro();
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void CreatEnviro()
     {
+        //Khoi tao cuc da dau` tien
         Vector3 Pos = randomRock();
         listRock.Add(Pos);
         Instantiate(Rock, Pos, Quaternion.identity, this.transform);
-
-        for(int i = 1; i < n; i++)
+        createdRock++;
+        
+        //Kiem tra tu 0 -> createdRock thoi, kiem tra het listRock thi no null day :v
+        int i=1;
+        while (i<n)
         {
-            Vector3 posTemp = randomRock();
-            if (checkDistance(listRock, Pos))
+            Pos = randomRock();
+            bool temp = true;
+            for (int j = 0; j < createdRock; j++)
             {
-                listRock.Add(posTemp);
-                Instantiate(Rock, posTemp, Quaternion.identity, this.transform);
+                if (Vector3.Distance(Pos, listRock[j]) < defaultDistance)
+                {
+                    temp = false;
+                    break;
+                }
             }
-            else
-                i--;
+            if (temp)
+            {
+                listRock.Add(Pos);
+                Instantiate(Rock, Pos, Quaternion.identity, this.transform);
+                createdRock++;
+                i++;
+            }
+            
         }
+        
     }
 
     Vector3 randomRock()
@@ -61,13 +70,4 @@ public class CreatEnvironment : MonoBehaviour
         return Pos;
     }
 
-    bool checkDistance(List<Vector3> listRock, Vector3 Pos)
-    {
-        foreach(var posRock in listRock)
-        {
-            if (Vector3.Distance(Pos, posRock) < defaultDistance)
-                return false;
-        }
-            return true;
-    }
 }
