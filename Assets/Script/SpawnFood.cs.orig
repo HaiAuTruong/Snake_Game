@@ -50,12 +50,33 @@ public class SpawnFood : MonoBehaviour
     {
 
         Vector3 spawnPos;
-	 float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
 
-         float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
+
+        //        // x position between left & right border
+        //        float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
+
+        //        //y position between top & bottom border
+        //        float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
+        //=======
+        //        do
+        //        {
+        // x position between left & right border
+        float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
+
+        //y position between top & bottom border
+        float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
+<<<<<<< HEAD
 
         spawnPos = new Vector3(x, 0.5f, z);
-	if (!IsRock(spawnPos, CreatEnvironment.listRock))
+
+        //} while (IsRock(spawnPos, CreatEnvironment.listRock));
+
+
+=======
+>>>>>>> origin/Branch_cua_tui___khong_can_quan_tam
+
+        //Instantiate the food at (x, y)
+        if (!IsRock(spawnPos, CreatEnvironment.listRock))
         {
             Instantiate(food, spawnPos, Quaternion.identity);
             ate = false;

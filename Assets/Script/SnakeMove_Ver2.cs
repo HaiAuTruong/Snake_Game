@@ -2,82 +2,92 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeMove : MonoBehaviour
+public class SnakeMove_Ver2 : MonoBehaviour
 {
 
-    public float Speed = 4f;
-    private Vector3 Direction = Vector3.left;
-    public float headDistance = 3f;
-    public float clockwise = 1000.0f;
-    public float counterClockwise = -5.0f;
+    public float distance = 1f;
+
+    public float time = 0.5f;
+
     public GameObject cube;
 
-    Vector3 newBodyPos;
-    int bodyCount = 1;
+    private bool paused;
 
+    private Vector3 newBodyPos;
+
+    public static int bodyCount = 1;
+
+    public static List<Transform> bodyPart;
+    
     // Use this for initialization
     void Start()
     {
-        
+        bodyPart = new List<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+        //IF PAUSING THEN DO NOTHING
+        if (paused)
+            return;
+        
+        //ALWAYS MOVE TOWARD
+        transform.position += transform.forward * distance;
 
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Rotate(0, Time.deltaTime * clockwise, 0);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Rotate(0, Time.deltaTime * counterClockwise, 0);
-        }
+        StartCoroutine(Pause());
+    }
 
-        //transform.Translate(Direction * Time.deltaTime * Speed);
-        transform.position += transform.forward * Time.deltaTime * Speed;
+    //PAUSE THE SNAKE FOR X SECONDS
+    private IEnumerator Pause()
+    {
+        paused = true;
+        yield return new WaitForSeconds(time);
+        paused = false;
     }
 
     void OnTriggerEnter(Collider col)
     {
-       
+
         Vector3 newPos = new Vector3();
         switch (col.gameObject.name)
         {
             case "Right_Border":
-                // Change parent transform
+                this.gameObject.transform.DetachChildren();
+                
                 newPos = GameObject.Find("Left_Border").transform.position;
-                newPos.x += 3f;
+                newPos.x += 1.5f;
                 newPos.y = 0.5f;
                 newPos.z = this.transform.position.z;
                 transform.position = newPos;
 
                 break;
             case "Left_Border":
-               
-                // Change parent transform
+                this.gameObject.transform.DetachChildren();
+                
                 newPos = GameObject.Find("Right_Border").transform.position;
-                newPos.x -= 3f;
+                newPos.x -= 1.5f;
                 newPos.y = 0.5f;
                 newPos.z = this.transform.position.z;
                 transform.position = newPos;
 
                 break;
             case "Top_Border":
+                this.gameObject.transform.DetachChildren();
                 
-                // Change parent transform
                 newPos = GameObject.Find("Bottom_Border").transform.position;
-                newPos.z += 3f;
+                newPos.z += 1.5f;
                 newPos.y = 0.5f;
                 newPos.x = this.transform.position.x;
                 transform.position = newPos;
 
                 break;
             case "Bottom_Border":
+                this.gameObject.transform.DetachChildren();
                 
-                // Change parent transform
                 newPos = GameObject.Find("Top_Border").transform.position;
-                newPos.z -= 3f;
+                newPos.z -= 1.5f;
                 newPos.y = 0.5f;
                 newPos.x = this.transform.position.x;
                 transform.position = newPos;
@@ -88,15 +98,11 @@ public class SnakeMove : MonoBehaviour
 
                 newBodyPos = this.transform.position - bodyCount * transform.forward;
                 bodyCount++;
-                Instantiate(cube, newBodyPos, this.transform.rotation, this.transform);
                 Destroy(col.gameObject);
-
-                SpawnFood.ate = true;
-                Debug.Log(SpawnFood.ate);
+                bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation, this.transform) as GameObject).transform);
+         
                 break;
         }
 
     }
-
-
 }
