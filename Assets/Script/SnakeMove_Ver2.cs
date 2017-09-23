@@ -99,6 +99,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 newBodyPos = this.transform.position - bodyCount * transform.forward;
                 bodyCount++;
                 Destroy(col.gameObject);
+                SpawnFood.ate = true;
                 bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation, this.transform) as GameObject).transform);
          
                 break;

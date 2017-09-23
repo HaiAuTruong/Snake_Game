@@ -5,7 +5,7 @@ using UnityEngine;
 public class CreatEnvironment : MonoBehaviour
 {
     public GameObject Rock;
-    static int n = 10;
+    static int n = 5;
     public static List<Vector3> listRock = new List<Vector3>(n);
     private float defaultDistance = 10f;
     private Transform border_Top;

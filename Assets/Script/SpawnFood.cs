@@ -17,6 +17,7 @@ public class SpawnFood : MonoBehaviour
 
     private int CountFood = 0;
 
+    private float defaultDistance = 3f;
     // Use this for initialization
     void Start()
     {
@@ -50,14 +51,14 @@ public class SpawnFood : MonoBehaviour
     {
 
         Vector3 spawnPos;
-	 float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
+        float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
 
-         float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
+        float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
 
         spawnPos = new Vector3(x, 0.5f, z);
-	if (!IsRock(spawnPos, CreatEnvironment.listRock))
+        if (!IsRock(spawnPos, CreatEnvironment.listRock))
         {
-            Instantiate(food, spawnPos, Quaternion.identity);
+            Instantiate(food, spawnPos, Quaternion.identity,this.transform);
             ate = false;
         }
         else return;
@@ -67,7 +68,7 @@ public class SpawnFood : MonoBehaviour
     {
         foreach (var posRock in listRock)
         {
-            if (pos == posRock)
+            if (Vector3.Distance(pos, posRock) < defaultDistance)
                 return true;
         }
 
