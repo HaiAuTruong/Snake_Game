@@ -6,17 +6,23 @@ public class SnakeMove_Ver2 : MonoBehaviour
 {
 
     public float distance = 1f;
+
     public float time = 0.5f;
+
     public GameObject cube;
 
     private bool paused;
+
     private Vector3 newBodyPos;
-    private int bodyCount = 1;
+
+    public static int bodyCount = 1;
+
+    public static List<Transform> bodyPart;
     
     // Use this for initialization
     void Start()
     {
-        
+        bodyPart = new List<Transform>();
     }
 
     // Update is called once per frame
@@ -48,7 +54,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
         switch (col.gameObject.name)
         {
             case "Right_Border":
-                // Change parent transform
+                this.gameObject.transform.DetachChildren();
+                
                 newPos = GameObject.Find("Left_Border").transform.position;
                 newPos.x += 1.5f;
                 newPos.y = 0.5f;
@@ -57,8 +64,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                 break;
             case "Left_Border":
-
-                // Change parent transform
+                this.gameObject.transform.DetachChildren();
+                
                 newPos = GameObject.Find("Right_Border").transform.position;
                 newPos.x -= 1.5f;
                 newPos.y = 0.5f;
@@ -67,8 +74,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                 break;
             case "Top_Border":
-
-                // Change parent transform
+                this.gameObject.transform.DetachChildren();
+                
                 newPos = GameObject.Find("Bottom_Border").transform.position;
                 newPos.z += 1.5f;
                 newPos.y = 0.5f;
@@ -77,8 +84,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                 break;
             case "Bottom_Border":
-
-                // Change parent transform
+                this.gameObject.transform.DetachChildren();
+                
                 newPos = GameObject.Find("Top_Border").transform.position;
                 newPos.z -= 1.5f;
                 newPos.y = 0.5f;
@@ -91,7 +98,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 newBodyPos = this.transform.position - bodyCount * transform.forward;
                 bodyCount++;
                 Destroy(col.gameObject);
-                Instantiate(cube, newBodyPos, this.transform.rotation, this.transform);
+                bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation, this.transform) as GameObject).transform);
          
                 break;
         }
