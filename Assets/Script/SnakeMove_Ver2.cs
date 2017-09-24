@@ -15,28 +15,48 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     private Vector3 newBodyPos;
 
-    public static int bodyCount = 1;
+    private int bodyCount = 0;
 
     public static List<Transform> bodyPart;
-    
+
+    private float smooth;
+
     // Use this for initialization
     void Start()
     {
+        SnakeDirection snakeDirection = this.GetComponent<SnakeDirection>();
+        smooth = snakeDirection.smooth;
         bodyPart = new List<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
         //IF PAUSING THEN DO NOTHING
         if (paused)
             return;
-        
+        Vector3 headPos = this.transform.position;
         //ALWAYS MOVE TOWARD
         transform.position += transform.forward * distance;
-
+        if (bodyPart.Count > 0)
+        {
+            Vector3 firstPos = bodyPart[0].position;
+            Vector3 secondPos = bodyPart[0].position;
+            bodyPart[0].rotation = Quaternion.Lerp(transform.rotation, SnakeDirection.targetRotation, 10 * smooth * Time.deltaTime);
+            bodyPart[0].position = headPos;
+            int i = 1;
+            while (i < bodyPart.Count)
+            {
+                secondPos = bodyPart[i].position;
+                bodyPart[i].rotation = Quaternion.Lerp(transform.rotation, SnakeDirection.targetRotation, 10 * smooth * Time.deltaTime);
+                bodyPart[i].position = firstPos;
+                firstPos = secondPos;
+                i++;
+            }
+        }
         StartCoroutine(Pause());
+
     }
 
     //PAUSE THE SNAKE FOR X SECONDS
@@ -55,7 +75,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
         {
             case "Right_Border":
                 this.gameObject.transform.DetachChildren();
-                
+
                 newPos = GameObject.Find("Left_Border").transform.position;
                 newPos.x += 1.5f;
                 newPos.y = 0.5f;
@@ -65,7 +85,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 break;
             case "Left_Border":
                 this.gameObject.transform.DetachChildren();
-                
+
                 newPos = GameObject.Find("Right_Border").transform.position;
                 newPos.x -= 1.5f;
                 newPos.y = 0.5f;
@@ -75,7 +95,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 break;
             case "Top_Border":
                 this.gameObject.transform.DetachChildren();
-                
+
                 newPos = GameObject.Find("Bottom_Border").transform.position;
                 newPos.z += 1.5f;
                 newPos.y = 0.5f;
@@ -85,7 +105,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 break;
             case "Bottom_Border":
                 this.gameObject.transform.DetachChildren();
-                
+
                 newPos = GameObject.Find("Top_Border").transform.position;
                 newPos.z -= 1.5f;
                 newPos.y = 0.5f;
@@ -96,12 +116,16 @@ public class SnakeMove_Ver2 : MonoBehaviour
             case "smallFood(Clone)":
             case "bigFood(Clone)":
 
-                newBodyPos = this.transform.position - bodyCount * transform.forward;
+                //newBodyPos = this.transform.position - (bodyCount + 1) * transform.forward;
+                if (bodyCount == 0)
+                    newBodyPos = this.transform.position - transform.forward;
+                else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
+
                 bodyCount++;
                 Destroy(col.gameObject);
                 SpawnFood.ate = true;
-                bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation, this.transform) as GameObject).transform);
-         
+                bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
+
                 break;
         }
 

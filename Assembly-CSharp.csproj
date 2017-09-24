@@ -53,7 +53,6 @@
   <ItemGroup>
      <Compile Include="Assets\Script\CreatEnvironment.cs" />
      <Compile Include="Assets\Script\PointLightTrack.cs" />
-     <Compile Include="Assets\Script\SnakeBody.cs" />
      <Compile Include="Assets\Script\SnakeDirection.cs" />
      <Compile Include="Assets\Script\SnakeMove_Ver2.cs" />
      <Compile Include="Assets\Script\SpawnFood.cs" />
