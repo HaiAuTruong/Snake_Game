@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class CreatEnvironment : MonoBehaviour
 {
-    public GameObject Rock;
-    static int n = 5;
+    public GameObject Rock1;
+    public GameObject Rock2;
+    public GameObject Rock3;
+    public GameObject Rock4;
+    public GameObject Rock5;
+    static int n = 12;
     public static List<Vector3> listRock = new List<Vector3>(n);
     private float defaultDistance = 10f;
     private Transform border_Top;
@@ -28,7 +32,8 @@ public class CreatEnvironment : MonoBehaviour
         //Khoi tao cuc da dau` tien
         Vector3 Pos = randomRock();
         listRock.Add(Pos);
-        Instantiate(Rock, Pos, Quaternion.identity, this.transform);
+        Instantiate(Rock1, Pos, Quaternion.identity, this.transform);
+        Debug.Log("rock");
         createdRock++;
         
         //Kiem tra tu 0 -> createdRock thoi, kiem tra het listRock thi no null day :v
@@ -48,13 +53,22 @@ public class CreatEnvironment : MonoBehaviour
             if (temp)
             {
                 listRock.Add(Pos);
-                Instantiate(Rock, Pos, Quaternion.identity, this.transform);
+                if(i % 5 == 1)
+                    Instantiate(Rock1, Pos, Quaternion.identity, this.transform);
+                else if(i % 5 == 2)
+                    Instantiate(Rock2, Pos, Quaternion.identity, this.transform);
+                else if(i % 5 == 3)
+                    Instantiate(Rock3, Pos, Quaternion.identity, this.transform);
+                else if(i % 5 == 4)
+                    Instantiate(Rock4, Pos, Quaternion.identity, this.transform);
+                else
+                    Instantiate(Rock5, Pos, Quaternion.identity, this.transform);
+  
                 createdRock++;
                 i++;
             }
             
         }
-        
     }
 
     Vector3 randomRock()
