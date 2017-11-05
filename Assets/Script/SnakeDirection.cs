@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class SnakeDirection : MonoBehaviour {
 
-    public float smooth = 5f;
+    public float smooth = 10f;
 
     public static Vector3 beforeTurningPos;
 
     public static Quaternion targetRotation;
 
     private string Direction;
+
+    private bool paused;
+
+    public float time = 0.2f;
 
 	void Start () {
         targetRotation = transform.rotation;
@@ -22,7 +26,8 @@ public class SnakeDirection : MonoBehaviour {
 	void Update () {
 
         //GET INPUT KEY TO ROTATE
-   
+        if (paused)
+            return;
         if (Input.GetKey(KeyCode.RightArrow) && Direction != "Right" && Direction != "Left")
         {
             if (Direction == "Up")
@@ -72,7 +77,8 @@ public class SnakeDirection : MonoBehaviour {
         }
         
         //ROTATE THE SNAKE AFTER INPUT
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
+        
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
 
         //FIX THE POSITION AFTER ROTATE
 
@@ -92,6 +98,13 @@ public class SnakeDirection : MonoBehaviour {
     {
         Direction = Dir;
         targetRotation *= Quaternion.AngleAxis(C*90, Vector3.up);
+        StartCoroutine(Pause());
+    }
+    private IEnumerator Pause()
+    {
+        paused = true;
+        yield return new WaitForSeconds(time);
+        paused = false;
     }
 }
  

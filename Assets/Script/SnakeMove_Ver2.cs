@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SnakeMove_Ver2 : MonoBehaviour
 {
 
@@ -10,6 +10,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
     public float time = 0.5f;
 
     public GameObject cube;
+
+    public GameObject endGameScreen;
 
     private bool paused;
 
@@ -21,12 +23,22 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     private float smooth;
 
+    private int score = 0;
+
+    public Text txtScore;
+
+    private int count = 0;
+
+    private int k = 1;
+
+    private float startSpeed;
     // Use this for initialization
     void Start()
     {
         SnakeDirection snakeDirection = this.GetComponent<SnakeDirection>();
         smooth = snakeDirection.smooth;
         bodyPart = new List<Transform>();
+        startSpeed = time;
     }
 
     // Update is called once per frame
@@ -37,7 +49,13 @@ public class SnakeMove_Ver2 : MonoBehaviour
         if (paused)
             return;
         Vector3 headPos = this.transform.position;
-
+        Debug.Log("count = " + count);
+        if (count == 10)
+        {
+            time = time - time * 0.2f;
+            count = 0;
+            Debug.Log(time);
+        }
         //ALWAYS MOVE TOWARD
         transform.position += transform.forward * distance;
 
@@ -53,13 +71,13 @@ public class SnakeMove_Ver2 : MonoBehaviour
             while (i < bodyPart.Count)
             {
                 secondPos = bodyPart[i].position;
-                
+
                 bodyPart[i].rotation = Quaternion.Lerp(transform.rotation, SnakeDirection.targetRotation, 10 * smooth * Time.deltaTime);
 
                 bodyPart[i].position = firstPos;
 
                 firstPos = secondPos;
-                
+
                 i++;
             }
         }
@@ -121,18 +139,19 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 transform.position = newPos;
 
                 break;
-            
-            
+
+
             case "smallFood(Clone)":
                 if (bodyCount == 0)
                     newBodyPos = this.transform.position - transform.forward;
                 else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
-
+                setPoint(1);
                 bodyCount++;
                 Destroy(col.gameObject);
                 SpawnFood.ate = true;
                 bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
 
+                count++;
                 break;
             case "bigFood(Clone)":
                 for (int i = 0; i < 2; i++)
@@ -145,10 +164,27 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                     bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
                 }
+                setPoint(5);
                 Destroy(col.gameObject);
                 SpawnFood.ate = true;
+
+                count++;
+                break;
+            case "Body(Clone)":
+
+                if (col.gameObject.transform != bodyPart[0] && col.gameObject.transform != bodyPart[1])
+                {
+                    Time.timeScale = 0;
+                    endGameScreen.SetActive(true);
+                }
                 break;
         }
 
+    }
+
+    void setPoint(int point)
+    {
+        score += point;
+        txtScore.text = "Score : " + score.ToString();
     }
 }

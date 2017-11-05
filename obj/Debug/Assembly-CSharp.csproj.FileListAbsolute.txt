@@ -95,3 +95,5 @@ C:\Users\Robin\Desktop\TeamWork\Game\Snake_Game\Temp\bin\Debug\nunit.framework.x
 C:\Users\Robin\Desktop\TeamWork\Game\Snake_Game\Temp\bin\Debug\UnityEngine.Analytics.xml
 C:\Users\Robin\Desktop\TeamWork\Game\Snake_Game\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\Robin\Desktop\TeamWork\Game\Snake_Game\Temp\bin\Debug\UnityEngine.VR.xml
+D:\Unity Projects\Snake_Game_3D_Master\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+D:\Unity Projects\Snake_Game_3D_Master\obj\Debug\Assembly-CSharp.dll
