@@ -21,6 +21,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     private float smooth;
 
+    private bool isAppear;
     // Use this for initialization
     void Start()
     {
@@ -64,7 +65,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
             }
         }
         StartCoroutine(Pause());
-
+        ////
     }
 
     //PAUSE THE SNAKE FOR X SECONDS
@@ -75,6 +76,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
         paused = false;
     }
 
+    
     void OnTriggerEnter(Collider col)
     {
 
@@ -124,6 +126,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
             
             
             case "smallFood(Clone)":
+
                 if (bodyCount == 0)
                     newBodyPos = this.transform.position - transform.forward;
                 else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
@@ -132,7 +135,22 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 Destroy(col.gameObject);
                 SpawnFood.ate = true;
                 bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
+                break;
+            case "bigFood(Clone)":
 
+
+                for (int i = 0; i < 2; i++)
+                {
+                    if (bodyCount == 0)
+                        newBodyPos = this.transform.position - transform.forward;
+                    else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
+
+                    bodyCount++;
+
+                    bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
+                }
+                Destroy(col.gameObject);
+                SpawnFood.ate = true;
                 break;
             case "bigFood(Clone)":
                 for (int i = 0; i < 2; i++)

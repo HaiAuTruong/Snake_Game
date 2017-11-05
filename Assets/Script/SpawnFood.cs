@@ -18,11 +18,11 @@ public class SpawnFood : MonoBehaviour
     private int CountFood = 0;
 
     private float defaultDistance = 3f;
+    private bool isAppear;
     // Use this for initialization
     void Start()
     {
         ate = false;
-        //spawn food every 4 seconds, starting in 3
         border_Top = GameObject.Find("Top_Border").transform;
         border_Bottom = GameObject.Find("Bottom_Border").transform;
         border_Left = GameObject.Find("Left_Border").transform;
@@ -36,8 +36,10 @@ public class SpawnFood : MonoBehaviour
         {
             if (CountFood == 5)
             {
-                Spawn(bigFood);
+
+                GameObject createdFood = Spawn(bigFood);
                 CountFood = 0;
+                StartCoroutine(Appear(createdFood));
             }
             else
             {
@@ -47,21 +49,22 @@ public class SpawnFood : MonoBehaviour
         }
     }
 
-    void Spawn(GameObject food)
+    GameObject Spawn(GameObject food)
     {
 
         Vector3 spawnPos;
         float x = Mathf.Round(Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f)) + 0.5f;
 
-        float z = Mathf.Round(Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f)) + 0.5f;
+        float z = Mathf.Round(Random.Range(border_Top.position.z - 10f, border_Bottom.position.z + 6f)) + 0.5f;
 
         spawnPos = new Vector3(x, 0.5f, z);
         if (!IsRock(spawnPos, CreatEnvironment.listRock))
         {
-            Instantiate(food, spawnPos, Quaternion.identity,this.transform);
+           GameObject foodCreated = Instantiate(food, spawnPos, Quaternion.identity,this.transform) as GameObject;
             ate = false;
+            return foodCreated;
         }
-        else return;
+        else return null;
     }
 
     bool IsRock(Vector3 pos, List<Vector3> listRock)
@@ -75,6 +78,12 @@ public class SpawnFood : MonoBehaviour
         return false;
     }
 
-
-
+    private IEnumerator Appear(GameObject bigFood)
+    {
+       // isAppear = true;
+        yield return new WaitForSeconds(3);
+       // isAppear = false;
+        Destroy(bigFood);
+        ate = true;
+    }
 }
