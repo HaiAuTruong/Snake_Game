@@ -38,21 +38,29 @@ public class SnakeMove_Ver2 : MonoBehaviour
         if (paused)
             return;
         Vector3 headPos = this.transform.position;
+
         //ALWAYS MOVE TOWARD
         transform.position += transform.forward * distance;
+
         if (bodyPart.Count > 0)
         {
             Vector3 firstPos = bodyPart[0].position;
             Vector3 secondPos = bodyPart[0].position;
+
             bodyPart[0].rotation = Quaternion.Lerp(transform.rotation, SnakeDirection.targetRotation, 10 * smooth * Time.deltaTime);
             bodyPart[0].position = headPos;
+
             int i = 1;
             while (i < bodyPart.Count)
             {
                 secondPos = bodyPart[i].position;
+                
                 bodyPart[i].rotation = Quaternion.Lerp(transform.rotation, SnakeDirection.targetRotation, 10 * smooth * Time.deltaTime);
+
                 bodyPart[i].position = firstPos;
+
                 firstPos = secondPos;
+                
                 i++;
             }
         }
@@ -115,8 +123,9 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 transform.position = newPos;
 
                 break;
+            
+            
             case "smallFood(Clone)":
-
                 if (bodyCount == 0)
                     newBodyPos = this.transform.position - transform.forward;
                 else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
@@ -127,8 +136,6 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
                 break;
             case "bigFood(Clone)":
-
-
                 for (int i = 0; i < 2; i++)
                 {
                     if (bodyCount == 0)

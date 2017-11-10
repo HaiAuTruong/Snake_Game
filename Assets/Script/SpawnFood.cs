@@ -41,11 +41,21 @@ public class SpawnFood : MonoBehaviour
                 CountFood = 0;
                 StartCoroutine(Appear(createdFood));
             }
-            else
+            else 
             {
-                Spawn(smallFood);
-                CountFood++;
+				GameObject temp = GameObject.Find("smallFood(Clone)");
+				if (temp == null)
+				{
+                    Spawn(smallFood);
+                    CountFood++;
+				}
             }
+
+            //else
+            //{
+            //    Spawn(smallFood);
+            //    CountFood++;
+            //}
         }
     }
 
@@ -81,7 +91,7 @@ public class SpawnFood : MonoBehaviour
     private IEnumerator Appear(GameObject bigFood)
     {
        // isAppear = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(10);
        // isAppear = false;
         Destroy(bigFood);
         ate = true;
