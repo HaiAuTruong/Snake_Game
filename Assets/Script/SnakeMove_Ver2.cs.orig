@@ -23,23 +23,23 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     private float smooth;
 
-    private bool isAppear;
+<<<<<<< HEAD
     private int score = 0;
 
     public Text txtScore;
 
     private int count = 0;
 
-    private int k = 1;
-
-    private float startSpeed;
+=======
+    private bool isAppear;
+>>>>>>> master
     // Use this for initialization
     void Start()
     {
         SnakeDirection snakeDirection = this.GetComponent<SnakeDirection>();
         smooth = snakeDirection.smooth;
         bodyPart = new List<Transform>();
-        startSpeed = time;
+      
     }
 
     // Update is called once per frame
@@ -50,12 +50,12 @@ public class SnakeMove_Ver2 : MonoBehaviour
         if (paused)
             return;
         Vector3 headPos = this.transform.position;
-        Debug.Log("count = " + count);
+       
         if (count == 10)
         {
             time = time - time * 0.2f;
             count = 0;
-            Debug.Log(time);
+            
         }
         //ALWAYS MOVE TOWARD
         transform.position += transform.forward * distance;
@@ -83,6 +83,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
             }
         }
         StartCoroutine(Pause());
+        ////
     }
 
     //PAUSE THE SNAKE FOR X SECONDS
@@ -142,14 +143,14 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 break;
 <<<<<<< HEAD
 
-
-            case "smallFood(Clone)":
+            case "Apple(Clone)":
+            //case "smallFood(Clone)":
 =======
             
             
             case "smallFood(Clone)":
 
->>>>>>> origin/master
+>>>>>>> master
                 if (bodyCount == 0)
                     newBodyPos = this.transform.position - transform.forward;
                 else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
@@ -158,10 +159,15 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 Destroy(col.gameObject);
                 SpawnFood.ate = true;
                 bodyPart.Add((Instantiate(cube, newBodyPos, this.transform.rotation) as GameObject).transform);
+<<<<<<< HEAD
 
                 count++;
+=======
+>>>>>>> master
                 break;
             case "bigFood(Clone)":
+
+
                 for (int i = 0; i < 2; i++)
                 {
                     if (bodyCount == 0)
@@ -175,7 +181,6 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 setPoint(5);
                 Destroy(col.gameObject);
                 SpawnFood.ate = true;
-<<<<<<< HEAD
 
                 count++;
                 break;
@@ -187,10 +192,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                     endGameScreen.SetActive(true);
                 }
                 break;
-=======
-                break;
            
->>>>>>> origin/master
         }
 
     }

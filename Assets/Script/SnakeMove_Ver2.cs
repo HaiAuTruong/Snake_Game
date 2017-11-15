@@ -24,7 +24,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
     private float smooth;
 
     private int score = 0;
-
+    private bool isAppear;
     public Text txtScore;
 
     private int count = 0;
@@ -35,7 +35,6 @@ public class SnakeMove_Ver2 : MonoBehaviour
         SnakeDirection snakeDirection = this.GetComponent<SnakeDirection>();
         smooth = snakeDirection.smooth;
         bodyPart = new List<Transform>();
-      
     }
 
     // Update is called once per frame
@@ -68,18 +67,17 @@ public class SnakeMove_Ver2 : MonoBehaviour
             while (i < bodyPart.Count)
             {
                 secondPos = bodyPart[i].position;
-
+                
                 bodyPart[i].rotation = Quaternion.Lerp(transform.rotation, SnakeDirection.targetRotation, 10 * smooth * Time.deltaTime);
 
                 bodyPart[i].position = firstPos;
 
                 firstPos = secondPos;
-
+                
                 i++;
             }
         }
         StartCoroutine(Pause());
-
     }
 
     //PAUSE THE SNAKE FOR X SECONDS
@@ -90,6 +88,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
         paused = false;
     }
 
+    
     void OnTriggerEnter(Collider col)
     {
 
@@ -175,6 +174,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                     endGameScreen.SetActive(true);
                 }
                 break;
+           
         }
 
     }
