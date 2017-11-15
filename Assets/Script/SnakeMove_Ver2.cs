@@ -29,16 +29,13 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     private int count = 0;
 
-    private int k = 1;
-
-    private float startSpeed;
     // Use this for initialization
     void Start()
     {
         SnakeDirection snakeDirection = this.GetComponent<SnakeDirection>();
         smooth = snakeDirection.smooth;
         bodyPart = new List<Transform>();
-        startSpeed = time;
+      
     }
 
     // Update is called once per frame
@@ -49,12 +46,12 @@ public class SnakeMove_Ver2 : MonoBehaviour
         if (paused)
             return;
         Vector3 headPos = this.transform.position;
-        Debug.Log("count = " + count);
+       
         if (count == 10)
         {
             time = time - time * 0.2f;
             count = 0;
-            Debug.Log(time);
+            
         }
         //ALWAYS MOVE TOWARD
         transform.position += transform.forward * distance;
