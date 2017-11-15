@@ -140,8 +140,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                 break;
 
-
-            case "smallFood(Clone)":
+            case "Apple(Clone)":
+            //case "smallFood(Clone)":
                 if (bodyCount == 0)
                     newBodyPos = this.transform.position - transform.forward;
                 else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;

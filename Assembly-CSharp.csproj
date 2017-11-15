@@ -57,6 +57,8 @@
      <Compile Include="Assets\Script\SnakeDirection.cs" />
      <Compile Include="Assets\Script\SnakeMove_Ver2.cs" />
      <Compile Include="Assets\Script\SpawnFood.cs" />
+     <None Include="Assets\Fruit Pack\Shaders\ToonLitTransparent.shader" />
+     <None Include="Assets\Fruit Pack\Shaders\ToonLit.shader" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>D:/Unity Projects/Snake_Game_3D_Master/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
