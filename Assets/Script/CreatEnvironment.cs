@@ -9,9 +9,9 @@ public class CreatEnvironment : MonoBehaviour
     public GameObject Rock3;
     public GameObject Rock4;
     public GameObject Rock5;
-    static int n = 12;
+    static int n = 10;
     public static List<Vector3> listRock = new List<Vector3>(n);
-    private float defaultDistance = 10f;
+    private float defaultDistance = 8f;
     private Transform border_Top;
     private Transform border_Bottom;
     private Transform border_Left;
@@ -27,13 +27,15 @@ public class CreatEnvironment : MonoBehaviour
         CreatEnviro();
 	}
 
-    void CreatEnviro()
+    public void CreatEnviro()
     {
+        listRock.Clear();
+        Vector3 snakePos = new Vector3(19.5f, 0.5f, 20.5f);
         //Khoi tao cuc da dau` tien
         Vector3 Pos = randomRock();
         listRock.Add(Pos);
-        Instantiate(Rock1, Pos, Quaternion.identity, this.transform);
-        Debug.Log("rock");
+        if (Vector3.Distance(Pos,snakePos) > defaultDistance)
+            Instantiate(Rock1, Pos, Quaternion.identity, this.transform);
         createdRock++;
         
         //Kiem tra tu 0 -> createdRock thoi, kiem tra het listRock thi no null day :v
@@ -44,7 +46,7 @@ public class CreatEnvironment : MonoBehaviour
             bool temp = true;
             for (int j = 0; j < createdRock; j++)
             {
-                if (Vector3.Distance(Pos, listRock[j]) < defaultDistance)
+                if (Vector3.Distance(Pos, listRock[j]) < defaultDistance || Vector3.Distance(Pos, snakePos) < defaultDistance)
                 {
                     temp = false;
                     break;
@@ -74,10 +76,10 @@ public class CreatEnvironment : MonoBehaviour
     Vector3 randomRock()
     {
         //x position between left & right border
-        float  x = Random.Range(border_Left.position.x + 6f, border_Right.position.x - 6f);
+        float  x = Random.Range(border_Left.position.x + 5f, border_Right.position.x - 5f);
 
         //z position between top & bottom border
-        float z = Random.Range(border_Top.position.z - 6f, border_Bottom.position.z + 6f);
+        float z = Random.Range(border_Top.position.z - 5f, border_Bottom.position.z + 5f);
 
         Vector3 Pos = new Vector3(x, 0.5f, z);
 

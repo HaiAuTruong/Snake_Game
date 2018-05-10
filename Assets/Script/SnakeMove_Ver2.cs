@@ -7,7 +7,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     public float distance = 1f;
 
-    public float time = 0.5f;
+    public float time = 0.45f;
 
     public GameObject cube;
 
@@ -23,7 +23,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
     private float smooth;
 
-    private int score = 0;
+    public int score = 0;
     private bool isAppear;
     public Text txtScore;
 
@@ -91,6 +91,11 @@ public class SnakeMove_Ver2 : MonoBehaviour
     
     void OnTriggerEnter(Collider col)
     {
+        if (col.gameObject.name.StartsWith("Rock"))
+        {
+            //SpawnFood.ate = true;
+            LoadScene.EndGame();
+        }
 
         Vector3 newPos = new Vector3();
         switch (col.gameObject.name)
@@ -137,7 +142,7 @@ public class SnakeMove_Ver2 : MonoBehaviour
                 break;
 
             case "Apple(Clone)":
-            //case "smallFood(Clone)":
+            
                 if (bodyCount == 0)
                     newBodyPos = this.transform.position - transform.forward;
                 else newBodyPos = bodyPart[bodyCount - 1].position - bodyPart[bodyCount - 1].forward;
@@ -170,8 +175,8 @@ public class SnakeMove_Ver2 : MonoBehaviour
 
                 if (col.gameObject.transform != bodyPart[0] && col.gameObject.transform != bodyPart[1])
                 {
-                    Time.timeScale = 0;
-                    endGameScreen.SetActive(true);
+                    
+				LoadScene.EndGame();
                 }
                 break;
            
